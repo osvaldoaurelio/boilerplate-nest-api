@@ -1,0 +1,92 @@
+@baseUrl = http://localhost:3332/api/v1/
+@fullName = John Doe
+@email = test@example.com
+@password = Test@123
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNDFjMWE0NC1lOGI3LTQ5N2EtODE3Yi1kNzQ0YTc5YmE4Y2IiLCJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJmdWxsTmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNzQwNTExMzAwLCJleHAiOjE3NDA3NzA1MDB9.xgJseWek1hiMmsQBusi6qPVpzM_X0hFYXr4wmhUr4Gw
+
+
+
+#####################################
+#   src/auth/auth.controller.http   #
+#####################################
+
+### signup
+POST {{baseUrl}}auth/signup
+Content-Type: application/json
+
+{
+  "fullName": "{{fullName}}",
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+### login
+POST {{baseUrl}}auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+
+
+#####################################
+#   src/user/user.controller.http   #
+#####################################
+
+### get user info
+GET {{baseUrl}}user/me
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### update user info
+PATCH {{baseUrl}}user
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "fullName": "{{fullName}} Updated",
+  "image": "https://example.com/image.jpg"
+}
+
+
+
+#####################################
+#   src/task/task.controller.http   #
+#####################################
+
+### create task
+POST {{baseUrl}}task
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "title": "Task 0",
+  "description": "Task 0 description"
+}
+
+### get all tasks
+GET {{baseUrl}}task
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### get task by id
+GET {{baseUrl}}task/ccaf6b06-6f7c-42c5-9712-5539ae545b89
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### update task
+PATCH {{baseUrl}}task/ccaf6b06-6f7c-42c5-9712-5539ae545b89
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "aaaaa": "Task 0 Updated",
+  "isDone": true
+}
+
+### delete task
+DELETE {{baseUrl}}task/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}

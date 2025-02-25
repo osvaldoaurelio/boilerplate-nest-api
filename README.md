@@ -67,6 +67,9 @@ Principais tecnologias utilizadas:
 
 2. Instalar Git:
     - Instale o [Git](https://git-scm.com/downloads) com o comando: `sudo apt install git`.
+    - Configure o Git com o comando: `git config --global user.name "Seu Nome"` e `git config --global user.email "seu.email@exemplo.com"`.
+    - Crie uma chave SSH com o comando: `ssh-keygen -t ed25519 -C "seu.email@exemplo.com"`.
+    - Execute o comando: `cat ~/.ssh/id_ed25519.pub`. Copie a chave e adicione-a ao seu perfil do [GitHub - settings/keys](https://github.com/settings/keys).
 
 3. Instalar Node.js:
 
@@ -80,7 +83,7 @@ Para instalar e configurar o projeto:
 1. Clone o repositório:
 
     ```bash
-    git clone https://github.com/osvaldoaurelio/boilerplate-nest-api.git
+    git clone git@github.com:osvaldoaurelio/boilerplate-nest-api.git
     ```
 
 2. Navegue até a pasta do projeto:
