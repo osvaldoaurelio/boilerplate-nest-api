@@ -28,6 +28,11 @@ export class AuthService {
   }
 
   signup(signUpDto: SignUpDto) {
-    return this.prisma.user.create({ data: signUpDto });
+    return this.prisma.user.create({
+      data: {
+        ...signUpDto,
+        isActive: true,
+      },
+    });
   }
 }

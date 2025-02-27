@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
+import { CreateTaskDto } from './dtos/create-task.dto';
+import { UpdateTaskDto } from './dtos/update-task.dto';
 import { PrismaService } from 'src/common/modules/prisma/prisma.service';
+import { QueryTaskDto } from './dtos/query-task.dto';
 
 @Injectable()
 export class TaskService {
@@ -16,8 +17,20 @@ export class TaskService {
     });
   }
 
-  findAll(userId: string) {
-    return this.prisma.task.findMany({ where: { userId } });
+  findAll(userId: string, { page, limit, startDate, endDate }: QueryTaskDto) {
+    const between = ([start, end]: string[]) => ({ gte: start, lte: end });
+
+    return this.prisma.$transaction([
+      this.prisma.task.findMany({
+        where: { userId, createdAt: between([startDate, endDate]) },
+        orderBy: { createdAt: 'desc' },
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      this.prisma.task.count({
+        where: { userId, createdAt: between([startDate, endDate]) },
+      }),
+    ]);
   }
 
   findOne(id: string) {
@@ -32,6 +45,10 @@ export class TaskService {
   }
 
   remove(id: string) {
-    return this.prisma.task.delete({ where: { id } });
+    try {
+      return this.prisma.task.delete({ where: { id } });
+    } catch {
+      return null;
+    }
   }
 }

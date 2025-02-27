@@ -1,15 +1,9 @@
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe, VersioningType } from '@nestjs/common';
-import { SwaggerService } from './common/modules/swagger/swagger.service';
 import { ConfigService } from './common/modules/config/config.service';
 import { LoggerService } from './common/modules/logger/logger.service';
-
-const validatePipe = new ValidationPipe({
-  transform: true,
-  whitelist: true,
-  forbidNonWhitelisted: true,
-});
+import { SwaggerService } from './common/modules/swagger/swagger.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -18,10 +12,7 @@ async function bootstrap() {
   });
 
   const config = app.get(ConfigService);
-  const port = config.get<number>('PORT');
-  const global_prefix = config.get<string>('GLOBAL_PREFIX');
-
-  app.setGlobalPrefix(global_prefix);
+  app.setGlobalPrefix(config.get<string>('GLOBAL_PREFIX'));
   app.enableCors({
     origin: config.get<string>('CORS_ORIGIN'),
     methods: config.get<string>('CORS_METHODS'),
@@ -32,12 +23,21 @@ async function bootstrap() {
     prefix: config.get<string>('API_VERSION_PREFIX'),
     defaultVersion: config.get<string>('API_VERSION_DEFAULT'),
   });
-  app.useGlobalPipes(validatePipe);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
 
-  SwaggerService.setup(app, global_prefix);
+  const swagger = app.get(SwaggerService);
+  swagger.setup(app);
 
+  const port = config.get<number>('PORT');
   await app.listen(port, () => {
-    app.get(LoggerService).log(`Server running on port ${port}`);
+    const logger = app.get(LoggerService);
+    logger.log(`Server is up and running on port ${port}`, 'Bootstrap');
   });
 }
 

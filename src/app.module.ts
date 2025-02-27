@@ -7,9 +7,9 @@ import { LogInterceptor } from './common/interceptors/log.interceptor';
 import { ConfigModule } from './common/modules/config/config.module';
 import { LoggerModule } from './common/modules/logger/logger.module';
 import { PrismaModule } from './common/modules/prisma/prisma.module';
+import { SwaggerModule } from './common/modules/swagger/swagger.module';
 import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
-
 @Module({
   imports: [
     AuthModule,
@@ -18,6 +18,7 @@ import { UserModule } from './user/user.module';
     PrismaModule,
     TaskModule,
     UserModule,
+    SwaggerModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },

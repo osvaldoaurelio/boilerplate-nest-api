@@ -1,9 +1,9 @@
 import { Transform } from 'class-transformer';
 
-export function Trim() {
+export function ToISOString() {
   return Transform(({ value }) => {
     try {
-      return value?.trim();
+      return new Date(value).toISOString();
     } catch {
       return value;
     }

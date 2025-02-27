@@ -67,7 +67,7 @@ Authorization: Bearer {{access_token}}
 }
 
 ### get all tasks
-GET {{baseUrl}}task
+GET {{baseUrl}}task?startDate=2023-01-01
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
@@ -82,11 +82,10 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "aaaaa": "Task 0 Updated",
   "isDone": true
 }
 
 ### delete task
-DELETE {{baseUrl}}task/1
+DELETE {{baseUrl}}task/ccaf6b06-6f7c-42c5-9712-5539ae545b89
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
