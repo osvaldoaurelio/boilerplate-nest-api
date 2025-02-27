@@ -1,12 +1,12 @@
 import { Injectable, PipeTransform } from '@nestjs/common';
-import { SignUpDto } from '../dto/sign-up.dto';
+import { CreateSignUpDto } from '../dtos/create-sign-up.dto';
 import { EncryptionService } from 'src/common/modules/crypt/encryption.service';
 
 @Injectable()
 export class HashUserPasswordPipe implements PipeTransform {
   constructor(private readonly crypt: EncryptionService) {}
 
-  async transform(value: SignUpDto) {
+  async transform(value: CreateSignUpDto) {
     return {
       ...value,
       password: await this.crypt.hash(value.password),

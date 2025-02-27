@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import { EncryptionService } from 'src/common/modules/crypt/encryption.service';
 import { PrismaService } from 'src/common/modules/prisma/prisma.service';
-import { SignUpDto } from './dto/sign-up.dto';
+import { CreateSignUpDto } from './dtos/create-sign-up.dto';
 
 @Injectable()
 export class AuthService {
@@ -27,7 +27,7 @@ export class AuthService {
     return this.jwt.signAsync({ sub, email, fullName });
   }
 
-  signup(signUpDto: SignUpDto) {
+  signup(signUpDto: CreateSignUpDto) {
     return this.prisma.user.create({
       data: {
         ...signUpDto,

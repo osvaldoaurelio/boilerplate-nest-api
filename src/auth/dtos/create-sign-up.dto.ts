@@ -9,14 +9,18 @@ import {
 import { ToLowerCase } from 'src/common/decorators/to-lower-case.decorator';
 import { Trim } from 'src/common/decorators/trim.decorator';
 import { PasswordMatches } from '../decorators/password-matches.decorator';
+import { ApiProperty } from '@nestjs/swagger';
+import { PropertyUserDoc } from 'src/user/docs/property-user.doc';
 
-export class SignUpDto {
+export class CreateSignUpDto {
+  @ApiProperty({ example: PropertyUserDoc.email.example })
   @IsEmail()
   @IsNotEmpty()
   @MaxLength(255)
   @ToLowerCase()
   email: string;
 
+  @ApiProperty({ example: PropertyUserDoc.password.example })
   @IsString()
   @IsNotEmpty()
   @MinLength(8)
@@ -24,6 +28,7 @@ export class SignUpDto {
   @PasswordMatches()
   password: string;
 
+  @ApiProperty({ example: PropertyUserDoc.fullName.example })
   @IsString()
   @IsOptional()
   @MinLength(3)
