@@ -3,6 +3,7 @@ import {
   ApiBadRequestResponse,
   ApiBody,
   ApiConflictResponse,
+  ApiCreatedResponse,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiOperation,
@@ -15,8 +16,8 @@ import {
   Unauthorized,
 } from 'src/common/modules/swagger/docs/exceptions.doc';
 import { CreateLogInDto } from '../dtos/create-log-in.dto';
-import { LogInDto } from '../dtos/log-in.dto';
 import { CreateSignUpDto } from '../dtos/create-sign-up.dto';
+import { LogInDto } from '../dtos/log-in.dto';
 import { SignUpDto } from '../dtos/sign-up.dto';
 
 export function ApiLogInDoc() {
@@ -56,8 +57,8 @@ export function ApiSignUpDoc() {
       type: CreateSignUpDto,
       description: 'Sign up credentials',
     }),
-    ApiOkResponse({
-      description: 'Returns an access token.',
+    ApiCreatedResponse({
+      description: 'Returns the created user.',
       type: SignUpDto,
     }),
     ApiConflictResponse({
