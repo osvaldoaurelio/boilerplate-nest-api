@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNotEmpty,
@@ -8,9 +9,8 @@ import {
 } from 'class-validator';
 import { ToLowerCase } from 'src/common/decorators/to-lower-case.decorator';
 import { Trim } from 'src/common/decorators/trim.decorator';
-import { PasswordMatches } from '../decorators/password-matches.decorator';
-import { ApiProperty } from '@nestjs/swagger';
 import { PropertyUserDoc } from 'src/user/docs/property-user.doc';
+import { StrongPassword } from '../decorators/password-matches.decorator';
 
 export class CreateSignUpDto {
   @ApiProperty({ example: PropertyUserDoc.email.example })
@@ -25,7 +25,7 @@ export class CreateSignUpDto {
   @IsNotEmpty()
   @MinLength(8)
   @MaxLength(32)
-  @PasswordMatches()
+  @StrongPassword()
   password: string;
 
   @ApiProperty({ example: PropertyUserDoc.fullName.example })

@@ -86,6 +86,6 @@ Authorization: Bearer {{access_token}}
 }
 
 ### delete task
-DELETE {{baseUrl}}task/ccaf6b06-6f7c-42c5-9712-5539ae545b89
+DELETE {{baseUrl}}task/8b687d7c-0b2e-4442-b89f-24200a72831c
 Content-Type: application/json
 Authorization: Bearer {{access_token}}

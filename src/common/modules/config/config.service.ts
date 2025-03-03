@@ -1,5 +1,5 @@
 import { ConfigService as NestConfigService } from '@nestjs/config';
 
-export class ConfigService<
-  K = Record<string, unknown>,
-> extends NestConfigService<K, true> {}
+type ConfigMap = Record<string, unknown>;
+
+export class ConfigService<K = ConfigMap> extends NestConfigService<K, true> {}

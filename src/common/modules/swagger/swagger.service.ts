@@ -39,6 +39,6 @@ export class SwaggerService {
 
     setTimeout(() => {
       this.logger.log(`Mapped {${this.path}, GET} route`, 'Swagger API Docs');
-    }, 99);
+    }, 999);
   }
 }

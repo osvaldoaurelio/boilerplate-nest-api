@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { JwtConfigService } from './jwt-config.service';
 import { JwtModule } from '@nestjs/jwt';
+import { JwtConfigService } from './jwt-config.service';
 
 @Module({
   imports: [JwtModule.registerAsync({ useClass: JwtConfigService })],

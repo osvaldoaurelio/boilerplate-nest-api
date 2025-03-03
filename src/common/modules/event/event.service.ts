@@ -6,7 +6,7 @@ import { EventType } from './event.type';
 export class EventService {
   constructor(private readonly eventEmitter: EventEmitter2) {}
 
-  emit<T>(event: EventType, payload: T) {
+  emit(event: EventType, ...payload: any[]) {
     this.eventEmitter.emit(event, payload);
   }
 }

@@ -10,13 +10,13 @@ import {
 import { plainToInstance } from 'class-transformer';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { AuthService } from './auth.service';
+import { ApiLogInDoc, ApiSignUpDoc } from './docs/api-auth.doc';
+import { CreateSignUpDto } from './dtos/create-sign-up.dto';
 import { LogInDto } from './dtos/log-in.dto';
 import { SignUpDto } from './dtos/sign-up.dto';
-import { CreateSignUpDto } from './dtos/create-sign-up.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthRequest } from './interfaces/auth-request';
 import { HashUserPasswordPipe } from './pipes/hash-user-password.pipe';
-import { ApiLogInDoc, ApiSignUpDoc } from './docs/api-auth.doc';
 
 @Controller('auth')
 export class AuthController {

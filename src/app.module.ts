@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { GlobalExceptionFilter } from 'src/common/filters/global-exception.filter';
+import { LogInterceptor } from 'src/common/interceptors/log.interceptor';
+import { ConfigModule } from 'src/common/modules/config/config.module';
+import { EventModule } from 'src/common/modules/event/event.module';
+import { LoggerModule } from 'src/common/modules/logger/logger.module';
+import { PrismaModule } from 'src/common/modules/prisma/prisma.module';
+import { SwaggerModule } from 'src/common/modules/swagger/swagger.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
-import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
-import { LogInterceptor } from './common/interceptors/log.interceptor';
-import { ConfigModule } from './common/modules/config/config.module';
-import { EventModule } from './common/modules/event/event.module';
-import { LoggerModule } from './common/modules/logger/logger.module';
-import { PrismaModule } from './common/modules/prisma/prisma.module';
-import { SwaggerModule } from './common/modules/swagger/swagger.module';
 import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
 @Module({
@@ -24,8 +24,8 @@ import { UserModule } from './user/user.module';
   ],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },
-    { provide: APP_FILTER, useClass: GlobalExceptionFilter },
     { provide: APP_INTERCEPTOR, useClass: LogInterceptor },
+    { provide: APP_FILTER, useClass: GlobalExceptionFilter },
   ],
 })
 export class AppModule {}

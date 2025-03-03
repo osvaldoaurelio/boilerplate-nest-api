@@ -84,7 +84,7 @@ export class TaskController {
   @ApiDeleteTaskDoc()
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  remove(@Param('id', ParseUUIDPipe) id: string) {
-    return this.taskService.remove(id);
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
+    await this.taskService.remove(id);
   }
 }

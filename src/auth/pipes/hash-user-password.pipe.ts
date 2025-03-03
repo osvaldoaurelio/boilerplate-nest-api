@@ -1,6 +1,6 @@
 import { Injectable, PipeTransform } from '@nestjs/common';
-import { CreateSignUpDto } from '../dtos/create-sign-up.dto';
 import { EncryptionService } from 'src/common/modules/crypt/encryption.service';
+import { CreateSignUpDto } from '../dtos/create-sign-up.dto';
 
 @Injectable()
 export class HashUserPasswordPipe implements PipeTransform {

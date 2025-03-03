@@ -17,7 +17,7 @@ export class PropertyUserDoc {
   };
 
   static readonly password: ApiPropertyOptions = {
-    example: 'Pass@123',
+    example: 'Test@123',
     description: 'The password of the user.',
   };
 

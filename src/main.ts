@@ -1,9 +1,9 @@
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { ConfigService } from 'src/common/modules/config/config.service';
+import { LoggerService } from 'src/common/modules/logger/logger.service';
+import { SwaggerService } from 'src/common/modules/swagger/swagger.service';
 import { AppModule } from './app.module';
-import { ConfigService } from './common/modules/config/config.service';
-import { LoggerService } from './common/modules/logger/logger.service';
-import { SwaggerService } from './common/modules/swagger/swagger.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

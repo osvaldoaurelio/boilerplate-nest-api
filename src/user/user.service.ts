@@ -14,7 +14,7 @@ export class UserService {
   async update(id: string, data: UpdateUserDto) {
     const userUpdated = await this.prisma.user.update({ where: { id }, data });
 
-    this.event.emit(USER_EVENT.UPDATE, userUpdated);
+    this.event.emit(USER_EVENT.UPDATE, id, data);
 
     return userUpdated;
   }

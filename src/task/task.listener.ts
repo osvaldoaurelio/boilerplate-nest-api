@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { LoggerService } from 'src/common/modules/logger/logger.service';
-import { TaskDto } from './dtos/task.dto';
 
 export const TASK_EVENT = {
   CREATE: 'task.create',
@@ -14,17 +13,23 @@ export class TaskListener {
   constructor(private readonly logger: LoggerService) {}
 
   @OnEvent(TASK_EVENT.CREATE)
-  handleTaskCreateEvent(payload: TaskDto) {
-    this.logger.log(payload.id, 'Task created');
+  handleTaskCreateEvent([id, data]: any[]) {
+    this.logger.log(
+      `${JSON.stringify({ id })} ${JSON.stringify({ data })}`,
+      'Task created',
+    );
   }
 
   @OnEvent(TASK_EVENT.UPDATE)
-  handleTaskUpdateEvent(payload: TaskDto) {
-    this.logger.log(payload.id, 'Task updated');
+  handleTaskUpdateEvent([id, data]: any[]) {
+    this.logger.log(
+      `${JSON.stringify({ id })} ${JSON.stringify({ data })}`,
+      'Task updated',
+    );
   }
 
   @OnEvent(TASK_EVENT.REMOVE)
-  handleTaskRemoveEvent(payload: TaskDto) {
-    this.logger.log(payload.id, 'Task removed');
+  handleTaskRemoveEvent([id]: any[]) {
+    this.logger.log(`${JSON.stringify({ id })}`, 'Task removed');
   }
 }

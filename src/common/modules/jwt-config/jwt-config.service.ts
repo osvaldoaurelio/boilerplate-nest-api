@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { JwtOptionsFactory, JwtModuleOptions } from '@nestjs/jwt';
+import { JwtModuleOptions, JwtOptionsFactory } from '@nestjs/jwt';
 import { ConfigService } from '../config/config.service';
 
 @Injectable()

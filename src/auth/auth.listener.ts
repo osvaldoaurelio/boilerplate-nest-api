@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { LoggerService } from 'src/common/modules/logger/logger.service';
-import { UserDto } from 'src/user/dtos/user.dto';
 
 export const AUTH_EVENT = {
   SIGNUP: 'auth.signup',
@@ -12,7 +11,10 @@ export class AuthListener {
   constructor(private readonly logger: LoggerService) {}
 
   @OnEvent(AUTH_EVENT.SIGNUP)
-  handleAuthCreateEvent(payload: UserDto) {
-    this.logger.log(payload.id, 'User created');
+  handleAuthCreateEvent([id, data]: any[]) {
+    this.logger.log(
+      `${JSON.stringify({ id })} ${JSON.stringify({ data })}`,
+      'User created',
+    );
   }
 }

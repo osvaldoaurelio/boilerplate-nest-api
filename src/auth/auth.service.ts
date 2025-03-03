@@ -2,10 +2,10 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import { EncryptionService } from 'src/common/modules/crypt/encryption.service';
-import { PrismaService } from 'src/common/modules/prisma/prisma.service';
-import { CreateSignUpDto } from './dtos/create-sign-up.dto';
 import { EventService } from 'src/common/modules/event/event.service';
+import { PrismaService } from 'src/common/modules/prisma/prisma.service';
 import { AUTH_EVENT } from './auth.listener';
+import { CreateSignUpDto } from './dtos/create-sign-up.dto';
 
 @Injectable()
 export class AuthService {
@@ -30,15 +30,10 @@ export class AuthService {
     return this.jwt.signAsync({ sub, email, fullName });
   }
 
-  async signup(signUpDto: CreateSignUpDto) {
-    const userCreated = await this.prisma.user.create({
-      data: {
-        ...signUpDto,
-        isActive: true,
-      },
-    });
+  async signup(data: CreateSignUpDto) {
+    const userCreated = await this.prisma.user.create({ data });
 
-    this.event.emit(AUTH_EVENT.SIGNUP, userCreated);
+    this.event.emit(AUTH_EVENT.SIGNUP, userCreated.id, data);
 
     return userCreated;
   }

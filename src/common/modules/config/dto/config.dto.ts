@@ -11,7 +11,7 @@ export class ConfigDto {
 
   // Server settings
   @IsNumber()
-  PORT: number = 3332;
+  PORT: number = 3333;
 
   @IsString()
   GLOBAL_PREFIX: string = 'api';
