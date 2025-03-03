@@ -5,6 +5,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 import { LogInterceptor } from './common/interceptors/log.interceptor';
 import { ConfigModule } from './common/modules/config/config.module';
+import { EventModule } from './common/modules/event/event.module';
 import { LoggerModule } from './common/modules/logger/logger.module';
 import { PrismaModule } from './common/modules/prisma/prisma.module';
 import { SwaggerModule } from './common/modules/swagger/swagger.module';
@@ -14,6 +15,7 @@ import { UserModule } from './user/user.module';
   imports: [
     AuthModule,
     ConfigModule,
+    EventModule,
     LoggerModule,
     PrismaModule,
     TaskModule,

@@ -7,13 +7,9 @@ export function envValidate(config: Record<string, unknown>) {
     enableImplicitConversion: true,
   });
 
-  const errors = validateSync(validatedConfig, {
-    skipMissingProperties: false,
-  });
+  const errors = validateSync(validatedConfig);
 
-  if (errors.length > 0) {
-    throw new Error(errors.toString());
-  }
+  if (errors.length > 0) throw new Error(errors.toString());
 
   return validatedConfig;
 }

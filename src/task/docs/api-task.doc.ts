@@ -1,66 +1,39 @@
 import { applyDecorators } from '@nestjs/common';
 import {
-  ApiBadRequestResponse,
   ApiCreatedResponse,
-  ApiInternalServerErrorResponse,
   ApiNoContentResponse,
-  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiParam,
-  ApiProperty,
   ApiQuery,
-  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import {
-  BadRequest,
-  InternalServerError,
-  NotFound,
-  Unauthorized,
+  ApiBadRequestResponseDoc,
+  ApiInternalServerErrorResponseDoc,
+  ApiNotFoundResponseDoc,
+  ApiUnauthorizedResponseDoc,
 } from 'src/common/modules/swagger/docs/exceptions.doc';
 import { PaginationDoc } from 'src/common/modules/swagger/docs/pagination.doc';
 import { days } from 'src/common/utils/time.utils';
 import { PropertyTaskDoc } from '../docs/property-task.doc';
 import { TaskDto } from '../dtos/task.dto';
 
-class TaskPagineted extends PaginationDoc {
-  @ApiProperty({
-    description: 'Return an array of tasks.',
-    isArray: true,
-    type: TaskDto,
-  })
-  data: TaskDto[];
-}
-
 export function ApiCreateTaskDoc() {
   return applyDecorators(
-    ApiOperation({
-      summary: 'Create a new Task',
-    }),
+    ApiOperation({ summary: 'Create a new Task' }),
     ApiCreatedResponse({
       description: 'The Task has been successfully created.',
       type: TaskDto,
     }),
-    ApiBadRequestResponse({
-      description: 'The request data is invalid.',
-      type: BadRequest,
-    }),
-    ApiUnauthorizedResponse({
-      description: 'The user is not authorized to perform this action.',
-      type: Unauthorized,
-    }),
-    ApiInternalServerErrorResponse({
-      description: 'The server encountered an internal error.',
-      type: InternalServerError,
-    }),
+    ApiBadRequestResponseDoc(),
+    ApiUnauthorizedResponseDoc(),
+    ApiInternalServerErrorResponseDoc(),
   );
 }
 
 export function ApiFindAllTasksDoc() {
   return applyDecorators(
-    ApiOperation({
-      summary: 'Get all tasks',
-    }),
+    ApiOperation({ summary: 'Get all tasks' }),
     ApiQuery({
       name: 'page',
       required: false,
@@ -91,28 +64,17 @@ export function ApiFindAllTasksDoc() {
     }),
     ApiOkResponse({
       description: 'Returns an array of tasks paginated.',
-      type: TaskPagineted,
+      type: PaginationDoc(TaskDto),
     }),
-    ApiBadRequestResponse({
-      description: 'The request data is invalid.',
-      type: BadRequest,
-    }),
-    ApiUnauthorizedResponse({
-      description: 'The user is not authorized to perform this action.',
-      type: Unauthorized,
-    }),
-    ApiInternalServerErrorResponse({
-      description: 'The server encountered an internal error.',
-      type: InternalServerError,
-    }),
+    ApiBadRequestResponseDoc(),
+    ApiUnauthorizedResponseDoc(),
+    ApiInternalServerErrorResponseDoc(),
   );
 }
 
 export function ApiFindOneTaskDoc() {
   return applyDecorators(
-    ApiOperation({
-      summary: 'Get a task by ID',
-    }),
+    ApiOperation({ summary: 'Get a task by ID' }),
     ApiParam({
       name: 'id',
       type: String,
@@ -124,30 +86,16 @@ export function ApiFindOneTaskDoc() {
       description: 'Returns the task with the specified ID.',
       type: TaskDto,
     }),
-    ApiBadRequestResponse({
-      description: 'The request data is invalid.',
-      type: BadRequest,
-    }),
-    ApiUnauthorizedResponse({
-      description: 'The user is not authorized to perform this action.',
-      type: Unauthorized,
-    }),
-    ApiNotFoundResponse({
-      description: 'The task with the specified ID was not found.',
-      type: NotFound,
-    }),
-    ApiInternalServerErrorResponse({
-      description: 'The server encountered an internal error.',
-      type: InternalServerError,
-    }),
+    ApiBadRequestResponseDoc(),
+    ApiUnauthorizedResponseDoc(),
+    ApiNotFoundResponseDoc(),
+    ApiInternalServerErrorResponseDoc(),
   );
 }
 
 export function ApiUpdateTaskDoc() {
   return applyDecorators(
-    ApiOperation({
-      summary: 'Update a task by ID',
-    }),
+    ApiOperation({ summary: 'Update a task by ID' }),
     ApiParam({
       name: 'id',
       type: String,
@@ -159,30 +107,16 @@ export function ApiUpdateTaskDoc() {
       description: 'The Task has been successfully updated.',
       type: TaskDto,
     }),
-    ApiBadRequestResponse({
-      description: 'The request data is invalid.',
-      type: BadRequest,
-    }),
-    ApiUnauthorizedResponse({
-      description: 'The user is not authorized to perform this action.',
-      type: Unauthorized,
-    }),
-    ApiNotFoundResponse({
-      description: 'The Task with the specified ID was not found.',
-      type: NotFound,
-    }),
-    ApiInternalServerErrorResponse({
-      description: 'The server encountered an internal error.',
-      type: InternalServerError,
-    }),
+    ApiBadRequestResponseDoc(),
+    ApiUnauthorizedResponseDoc(),
+    ApiNotFoundResponseDoc(),
+    ApiInternalServerErrorResponseDoc(),
   );
 }
 
 export function ApiDeleteTaskDoc() {
   return applyDecorators(
-    ApiOperation({
-      summary: 'Delete a task by ID',
-    }),
+    ApiOperation({ summary: 'Delete a task by ID' }),
     ApiParam({
       name: 'id',
       type: String,
@@ -193,21 +127,9 @@ export function ApiDeleteTaskDoc() {
     ApiNoContentResponse({
       description: 'The task has been successfully deleted.',
     }),
-    ApiBadRequestResponse({
-      description: 'The request data is invalid.',
-      type: BadRequest,
-    }),
-    ApiUnauthorizedResponse({
-      description: 'The user is not authorized to perform this action.',
-      type: Unauthorized,
-    }),
-    ApiNotFoundResponse({
-      description: 'The task with the specified ID was not found.',
-      type: NotFound,
-    }),
-    ApiInternalServerErrorResponse({
-      description: 'The server encountered an internal error.',
-      type: InternalServerError,
-    }),
+    ApiBadRequestResponseDoc(),
+    ApiUnauthorizedResponseDoc(),
+    ApiNotFoundResponseDoc(),
+    ApiInternalServerErrorResponseDoc(),
   );
 }

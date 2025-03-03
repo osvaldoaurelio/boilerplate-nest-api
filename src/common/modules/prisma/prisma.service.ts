@@ -13,14 +13,11 @@ export class PrismaService
   implements OnModuleInit, OnModuleDestroy
 {
   constructor(private readonly config: ConfigService) {
-    super({
-      errorFormat:
-        config.get('NODE_ENV') === 'production' ? 'minimal' : 'pretty',
-      log:
-        config.get('NODE_ENV') === 'production'
-          ? ['warn']
-          : ['query', 'info', 'warn'],
-    });
+    super(
+      config.get('NODE_ENV') === 'production'
+        ? { errorFormat: 'minimal', log: ['warn'] }
+        : { errorFormat: 'pretty', log: ['query', 'info', 'warn'] },
+    );
   }
 
   async onModuleInit() {

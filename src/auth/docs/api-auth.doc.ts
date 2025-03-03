@@ -1,19 +1,15 @@
 import { applyDecorators } from '@nestjs/common';
 import {
-  ApiBadRequestResponse,
   ApiBody,
-  ApiConflictResponse,
   ApiCreatedResponse,
-  ApiInternalServerErrorResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import {
-  BadRequest,
-  Conflict,
-  InternalServerError,
-  Unauthorized,
+  ApiBadRequestResponseDoc,
+  ApiConflictResponseDoc,
+  ApiInternalServerErrorResponseDoc,
+  ApiUnauthorizedResponseDoc,
 } from 'src/common/modules/swagger/docs/exceptions.doc';
 import { CreateLogInDto } from '../dtos/create-log-in.dto';
 import { CreateSignUpDto } from '../dtos/create-sign-up.dto';
@@ -22,9 +18,7 @@ import { SignUpDto } from '../dtos/sign-up.dto';
 
 export function ApiLogInDoc() {
   return applyDecorators(
-    ApiOperation({
-      summary: 'Perform a log in',
-    }),
+    ApiOperation({ summary: 'Perform a log in' }),
     ApiBody({
       type: CreateLogInDto,
       description: 'Log in credentials',
@@ -33,26 +27,15 @@ export function ApiLogInDoc() {
       description: 'Returns an access token.',
       type: LogInDto,
     }),
-    ApiBadRequestResponse({
-      description: 'The request data is invalid.',
-      type: BadRequest,
-    }),
-    ApiUnauthorizedResponse({
-      description: 'The user is not authorized to perform this action.',
-      type: Unauthorized,
-    }),
-    ApiInternalServerErrorResponse({
-      description: 'The server encountered an internal error.',
-      type: InternalServerError,
-    }),
+    ApiBadRequestResponseDoc(),
+    ApiUnauthorizedResponseDoc(),
+    ApiInternalServerErrorResponseDoc(),
   );
 }
 
 export function ApiSignUpDoc() {
   return applyDecorators(
-    ApiOperation({
-      summary: 'Perform a sign up',
-    }),
+    ApiOperation({ summary: 'Perform a sign up' }),
     ApiBody({
       type: CreateSignUpDto,
       description: 'Sign up credentials',
@@ -61,17 +44,8 @@ export function ApiSignUpDoc() {
       description: 'Returns the created user.',
       type: SignUpDto,
     }),
-    ApiConflictResponse({
-      description: 'The user already exists.',
-      type: Conflict,
-    }),
-    ApiBadRequestResponse({
-      description: 'The request data is invalid.',
-      type: BadRequest,
-    }),
-    ApiInternalServerErrorResponse({
-      description: 'The server encountered an internal error.',
-      type: InternalServerError,
-    }),
+    ApiConflictResponseDoc(),
+    ApiBadRequestResponseDoc(),
+    ApiInternalServerErrorResponseDoc(),
   );
 }

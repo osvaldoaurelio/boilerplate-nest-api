@@ -4,20 +4,24 @@ import {
   SwaggerCustomOptions,
   SwaggerModule,
 } from '@nestjs/swagger';
+import * as path from 'node:path';
 import { ConfigService } from '../config/config.service';
 import { LoggerService } from '../logger/logger.service';
 
 @Injectable()
 export class SwaggerService {
+  private path: string;
+
   constructor(
     private readonly config: ConfigService,
     private readonly logger: LoggerService,
-  ) {}
+  ) {
+    const global_prefix = this.config.get<string>('GLOBAL_PREFIX');
+    this.path = path.join('/', global_prefix, 'docs');
+  }
 
   setup(app: INestApplication) {
     if (this.config.get<string>('NODE_ENV') === 'production') return;
-
-    const path = `${this.config.get<string>('GLOBAL_PREFIX')}/docs`;
 
     const config = new DocumentBuilder()
       .setTitle('NestJS')
@@ -31,10 +35,10 @@ export class SwaggerService {
       customSiteTitle: 'Boilerplate NestJS',
     };
 
-    SwaggerModule.setup(path, app, document, options);
+    SwaggerModule.setup(this.path, app, document, options);
 
     setTimeout(() => {
-      this.logger.log(`Mapped {/${path}, GET} route`, 'Swagger API Docs');
+      this.logger.log(`Mapped {${this.path}, GET} route`, 'Swagger API Docs');
     }, 99);
   }
 }

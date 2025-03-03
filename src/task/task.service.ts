@@ -3,18 +3,27 @@ import { CreateTaskDto } from './dtos/create-task.dto';
 import { UpdateTaskDto } from './dtos/update-task.dto';
 import { PrismaService } from 'src/common/modules/prisma/prisma.service';
 import { QueryTaskDto } from './dtos/query-task.dto';
+import { EventService } from 'src/common/modules/event/event.service';
+import { TASK_EVENT } from './task.listener';
 
 @Injectable()
 export class TaskService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private readonly event: EventService,
+    private readonly prisma: PrismaService,
+  ) {}
 
-  create(userId: string, createTaskDto: CreateTaskDto) {
-    return this.prisma.task.create({
+  async create(userId: string, createTaskDto: CreateTaskDto) {
+    const taskCreated = await this.prisma.task.create({
       data: {
         ...createTaskDto,
         userId,
       },
     });
+
+    this.event.emit(TASK_EVENT.CREATE, taskCreated);
+
+    return taskCreated;
   }
 
   findAll(userId: string, { page, limit, startDate, endDate }: QueryTaskDto) {
@@ -37,16 +46,22 @@ export class TaskService {
     return this.prisma.task.findUniqueOrThrow({ where: { id } });
   }
 
-  update(id: string, updateTaskDto: UpdateTaskDto) {
-    return this.prisma.task.update({
+  async update(id: string, updateTaskDto: UpdateTaskDto) {
+    const taskUpdated = await this.prisma.task.update({
       where: { id },
       data: updateTaskDto,
     });
+
+    this.event.emit(TASK_EVENT.UPDATE, taskUpdated);
+
+    return taskUpdated;
   }
 
-  remove(id: string) {
+  async remove(id: string) {
     try {
-      return this.prisma.task.delete({ where: { id } });
+      await this.prisma.task.delete({ where: { id } });
+
+      this.event.emit(TASK_EVENT.REMOVE, { id });
     } catch {
       return null;
     }
