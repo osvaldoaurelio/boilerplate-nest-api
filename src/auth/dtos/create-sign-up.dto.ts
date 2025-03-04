@@ -10,7 +10,7 @@ import {
 import { ToLowerCase } from 'src/common/decorators/to-lower-case.decorator';
 import { Trim } from 'src/common/decorators/trim.decorator';
 import { PropertyUserDoc } from 'src/user/docs/property-user.doc';
-import { StrongPassword } from '../decorators/password-matches.decorator';
+import { StrongPassword } from '../decorators/strong-password.decorator';
 
 export class CreateSignUpDto {
   @ApiProperty({ example: PropertyUserDoc.email.example })

@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 import { ToLowerCase } from 'src/common/decorators/to-lower-case.decorator';
 import { PropertyUserDoc } from 'src/user/docs/property-user.doc';
-import { StrongPassword } from '../decorators/password-matches.decorator';
+import { StrongPassword } from '../decorators/strong-password.decorator';
 
 export class CreateLogInDto {
   @ApiProperty({ example: PropertyUserDoc.email.example })
