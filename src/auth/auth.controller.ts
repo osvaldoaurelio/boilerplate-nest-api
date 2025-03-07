@@ -3,6 +3,8 @@ import {
   Controller,
   HttpCode,
   HttpStatus,
+  Param,
+  ParseUUIDPipe,
   Post,
   Request,
   UseGuards,
@@ -40,5 +42,13 @@ export class AuthController {
     const user = await this.authService.signup(signUpDto);
 
     return plainToInstance(SignUpDto, user);
+  }
+
+  @IsPublic()
+  @Post('confirm-email/:id')
+  async confirmEmail(@Param('id', ParseUUIDPipe) id: string) {
+    const message = await this.authService.confirmEmail(id);
+
+    return { message };
   }
 }

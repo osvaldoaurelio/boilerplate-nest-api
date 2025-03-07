@@ -35,6 +35,9 @@ export class ConfigDto {
 
   // Email settings
   @IsString()
+  EMAIL_TEMPLATES_DIR: string = 'templates/emails';
+
+  @IsString()
   SMTP_HOST: string = 'smtp.example.email';
 
   @IsNumber()

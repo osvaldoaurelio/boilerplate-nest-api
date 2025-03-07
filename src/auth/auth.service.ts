@@ -1,7 +1,10 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
-import { EncryptionService } from 'src/common/modules/crypt/encryption.service';
+import {
+  CRYPT_SERVICE,
+  ICryptService,
+} from 'src/common/modules/crypt/crypt.interface';
 import { EventService } from 'src/common/modules/event/event.service';
 import { PrismaService } from 'src/common/modules/prisma/prisma.service';
 import { AUTH_EVENT } from './auth.listener';
@@ -10,7 +13,7 @@ import { CreateSignUpDto } from './dtos/create-sign-up.dto';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly crypt: EncryptionService,
+    @Inject(CRYPT_SERVICE) private readonly crypt: ICryptService,
     private readonly event: EventService,
     private readonly jwt: JwtService,
     private readonly prisma: PrismaService,
@@ -36,5 +39,14 @@ export class AuthService {
     this.event.emit(AUTH_EVENT.SIGNUP, userCreated.id, data);
 
     return userCreated;
+  }
+
+  async confirmEmail(id: string) {
+    const userUpdated = await this.prisma.user.update({
+      where: { id },
+      data: { isActive: true },
+    });
+
+    return `Email confirmed for ${userUpdated.email}`;
   }
 }

@@ -2,7 +2,9 @@ import { Module } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { GlobalExceptionFilter } from 'src/common/filters/global-exception.filter';
 import { LogInterceptor } from 'src/common/interceptors/log.interceptor';
+import { CacheModule } from 'src/common/modules/cache/cache.module';
 import { ConfigModule } from 'src/common/modules/config/config.module';
+import { EmailModule } from 'src/common/modules/email/email.module';
 import { EventModule } from 'src/common/modules/event/event.module';
 import { LoggerModule } from 'src/common/modules/logger/logger.module';
 import { PrismaModule } from 'src/common/modules/prisma/prisma.module';
@@ -14,7 +16,9 @@ import { UserModule } from './user/user.module';
 @Module({
   imports: [
     AuthModule,
+    CacheModule,
     ConfigModule,
+    EmailModule,
     EventModule,
     LoggerModule,
     PrismaModule,
