@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { GlobalExceptionFilter } from 'src/common/filters/global-exception.filter';
 import { LogInterceptor } from 'src/common/interceptors/log.interceptor';
-import { CacheModule } from 'src/common/modules/cache/cache.module';
+import { CacheConfigModule } from 'src/common/modules/cache-config/cache-config.module';
 import { ConfigModule } from 'src/common/modules/config/config.module';
 import { EmailModule } from 'src/common/modules/email/email.module';
 import { EventModule } from 'src/common/modules/event/event.module';
@@ -13,10 +13,11 @@ import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 @Module({
   imports: [
     AuthModule,
-    CacheModule,
+    CacheConfigModule,
     ConfigModule,
     EmailModule,
     EventModule,
@@ -29,6 +30,7 @@ import { UserModule } from './user/user.module';
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_INTERCEPTOR, useClass: LogInterceptor },
+    { provide: APP_INTERCEPTOR, useClass: CacheInterceptor },
     { provide: APP_FILTER, useClass: GlobalExceptionFilter },
   ],
 })

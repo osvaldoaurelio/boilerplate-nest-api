@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
-export function PaginationDoc<T>(classRef: new () => T) {
+export function PaginationDoc<T>(classDataRef: new () => T) {
   class PaginationClass {
     @ApiProperty({
       example: 100,
@@ -30,9 +30,9 @@ export function PaginationDoc<T>(classRef: new () => T) {
     @ApiProperty({
       description: 'Array of items on the current page.',
       isArray: true,
-      type: classRef,
+      type: classDataRef,
     })
-    @Type(() => classRef)
+    @Type(() => classDataRef)
     readonly data: T[];
   }
 

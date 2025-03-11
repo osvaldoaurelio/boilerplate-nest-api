@@ -17,9 +17,7 @@ export class DevEmailService implements IEmailService, OnModuleInit {
   constructor(
     private readonly logger: LoggerService,
     private readonly template: TemplateService,
-  ) {
-    this.logger.log('DevEmailService initialized', 'DevEmailService');
-  }
+  ) {}
 
   async onModuleInit() {
     const { smtp, user, pass } = await createTestAccount();
@@ -36,9 +34,7 @@ export class DevEmailService implements IEmailService, OnModuleInit {
       html,
     });
 
-    this.logger.log(
-      `Email sent to ${to} with subject ${subject}\n${getTestMessageUrl(info)}`,
-      'DevEmailService',
-    );
+    this.logger.log(`Email sent to: <${to}>`, 'DevEmailService');
+    this.logger.log(`View here: ${getTestMessageUrl(info)}`, 'DevEmailService');
   }
 }

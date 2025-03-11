@@ -15,8 +15,6 @@ export class SesEmailService implements IEmailService {
     private readonly logger: LoggerService,
     private readonly template: TemplateService,
   ) {
-    this.logger.log('SesEmailService initialized', 'SesEmailService');
-
     this.sesClient = new SESClient({
       region: this.config.get<string>('AWS_REGION'),
       credentials: {

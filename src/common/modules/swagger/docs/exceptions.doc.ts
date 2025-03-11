@@ -11,7 +11,7 @@ import {
 export function ApiBadRequestResponseDoc(
   description = 'The request data is invalid.',
 ) {
-  class Type {
+  class ResponseType {
     @ApiProperty({ example: HttpStatus.BAD_REQUEST })
     statusCode: number;
 
@@ -25,13 +25,13 @@ export function ApiBadRequestResponseDoc(
     timestamp: string;
   }
 
-  return ApiBadRequestResponse({ description, type: Type });
+  return ApiBadRequestResponse({ description, type: ResponseType });
 }
 
 export function ApiUnauthorizedResponseDoc(
   description = 'The user is not authorized to perform this action.',
 ) {
-  class Type {
+  class ResponseType {
     @ApiProperty({ example: HttpStatus.UNAUTHORIZED })
     statusCode: number;
 
@@ -45,13 +45,13 @@ export function ApiUnauthorizedResponseDoc(
     timestamp: string;
   }
 
-  return ApiUnauthorizedResponse({ description, type: Type });
+  return ApiUnauthorizedResponse({ description, type: ResponseType });
 }
 
 export function ApiNotFoundResponseDoc(
   description = 'The requested resource was not found.',
 ) {
-  class Type {
+  class ResponseType {
     @ApiProperty({ example: HttpStatus.NOT_FOUND })
     statusCode: number;
 
@@ -65,13 +65,13 @@ export function ApiNotFoundResponseDoc(
     timestamp: string;
   }
 
-  return ApiNotFoundResponse({ description, type: Type });
+  return ApiNotFoundResponse({ description, type: ResponseType });
 }
 
 export function ApiConflictResponseDoc(
   description = 'The request could not be completed due to a conflict.',
 ) {
-  class Type {
+  class ResponseType {
     @ApiProperty({ example: HttpStatus.CONFLICT })
     statusCode: number;
 
@@ -85,13 +85,13 @@ export function ApiConflictResponseDoc(
     timestamp: string;
   }
 
-  return ApiConflictResponse({ description, type: Type });
+  return ApiConflictResponse({ description, type: ResponseType });
 }
 
 export function ApiInternalServerErrorResponseDoc(
   description = 'The server encountered an internal error.',
 ) {
-  class Type {
+  class ResponseType {
     @ApiProperty({ example: HttpStatus.INTERNAL_SERVER_ERROR })
     statusCode: number;
 
@@ -105,5 +105,5 @@ export function ApiInternalServerErrorResponseDoc(
     timestamp: string;
   }
 
-  return ApiInternalServerErrorResponse({ description, type: Type });
+  return ApiInternalServerErrorResponse({ description, type: ResponseType });
 }

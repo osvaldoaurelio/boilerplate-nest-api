@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch } from '@nestjs/common';
+import { Body, Controller, Get, Patch, UseInterceptors } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 import { plainToInstance } from 'class-transformer';
@@ -7,12 +7,14 @@ import { ApiGetMeUserDoc, ApiUpdateUserDoc } from './docs/api-user.doc';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserDto } from './dtos/user.dto';
 import { UserService } from './user.service';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @ApiBearerAuth()
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @UseInterceptors(CacheInterceptor)
   @ApiGetMeUserDoc()
   @Get('me')
   getMe(@CurrentUser() user: User) {
