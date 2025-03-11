@@ -11,9 +11,9 @@ import { PrismaModule } from 'src/common/modules/prisma/prisma.module';
 import { SwaggerModule } from 'src/common/modules/swagger/swagger.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { httpCacheInterceptor } from './common/interceptors/http-cache.interceptor';
 import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
-import { CacheInterceptor } from '@nestjs/cache-manager';
 @Module({
   imports: [
     AuthModule,
@@ -30,7 +30,7 @@ import { CacheInterceptor } from '@nestjs/cache-manager';
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_INTERCEPTOR, useClass: LogInterceptor },
-    { provide: APP_INTERCEPTOR, useClass: CacheInterceptor },
+    { provide: APP_INTERCEPTOR, useClass: httpCacheInterceptor },
     { provide: APP_FILTER, useClass: GlobalExceptionFilter },
   ],
 })
